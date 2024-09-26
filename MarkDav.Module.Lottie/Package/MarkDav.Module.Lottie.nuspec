@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MarkDav.Module.Lottie</id>
+    <version>1.0.0</version>
+    <authors>MarkDav</authors>
+    <owners>MarkDav</owners>
+    <title>Lottie</title>
+    <description>animations</description>
+    <copyright>MarkDav</copyright>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/oqtane/oqtane.framework</projectUrl>
+    <icon>icon.png</icon>
+    <tags>oqtane module</tags>
+    <releaseNotes></releaseNotes>
+    <summary></summary>
+    <dependencies>
+      <dependency id="Oqtane.Framework" version="5.2.3" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\Client\bin\Release\net8.0\MarkDav.Module.Lottie.Client.Oqtane.dll" target="lib\net8.0" /> 
+    <file src="..\Client\bin\Release\net8.0\MarkDav.Module.Lottie.Client.Oqtane.pdb" target="lib\net8.0" /> 
+    <file src="..\Server\bin\Release\net8.0\MarkDav.Module.Lottie.Server.Oqtane.dll" target="lib\net8.0" /> 
+    <file src="..\Server\bin\Release\net8.0\MarkDav.Module.Lottie.Server.Oqtane.pdb" target="lib\net8.0" /> 
+    <file src="..\Shared\bin\Release\net8.0\MarkDav.Module.Lottie.Shared.Oqtane.dll" target="lib\net8.0" /> 
+    <file src="..\Shared\bin\Release\net8.0\MarkDav.Module.Lottie.Shared.Oqtane.pdb" target="lib\net8.0" /> 
+    <file src="..\Server\wwwroot\**\*.*" target="wwwroot" /> 
+    <file src="icon.png" target="" />
+  </files>
+</package>
