@@ -22,6 +22,12 @@ else
                     <p>
                         @_prompt
                     </p>
+                    <p>
+                        @foreach(var choice in _story.currentChoices)
+                        {
+                            <button class="btn btn-primary" @onclick="(() => ChoiceClick(choice.index))">@choice.text</button>
+                        }
+                    </p>
                 </div>
             </div>
         </div>
@@ -64,5 +70,13 @@ else
         {
             _prompt = _story.ContinueMaximally();
         }
+        StateHasChanged();  // help the buttons show up
+    }
+
+    private void ChoiceClick(int index)
+    {
+        var choice = _story.currentChoices[index];
+        _story.ChooseChoiceIndex(choice.index);
+        Continue();
     }
 }
