@@ -1,13 +1,8 @@
-@using MarkDav.Module.Ink.Services
-@using MarkDav.Module.Ink.Models
 @using InkRuntime = global::Ink.Runtime;
 @using global::Ink
 
-
 @namespace MarkDav.Module.Ink
 @inherits ModuleBase
-@inject IInkService InkService
-@inject NavigationManager NavigationManager
 @inject ISettingService SettingService
 
 @if (PageState.EditMode)

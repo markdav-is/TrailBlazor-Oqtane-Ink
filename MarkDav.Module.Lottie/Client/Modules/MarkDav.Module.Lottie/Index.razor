@@ -1,13 +1,46 @@
 @namespace MarkDav.Module.Lottie
 @inherits ModuleBase
 
-<dotlottie-wc src="https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie" autoplay loop></dotlottie-wc>
+@inject ISettingService SettingService
+
+@if (PageState.EditMode)
+{
+    <h2>@ModuleState.Title</h2>
+}
+else if (_url == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <p>
+                        <dotlottie-wc src="@_url" autoplay loop></dotlottie-wc>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+ 
+
 
 @code {
 
+    private string _url;
     protected override async Task OnInitializedAsync()
     {
-        // Load the lottie URL from settings
-
+        try
+        {
+            Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
+            _url = SettingService.GetSetting(settings, "LottieURL", "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie");
+        }
+        catch (Exception ex)
+        {
+            AddModuleMessage(ex.Message, MessageType.Error);
+        }
     }
 }

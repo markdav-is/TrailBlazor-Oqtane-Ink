@@ -1,11 +1,10 @@
 @namespace MarkDav.Module.Lottie
 @inherits ModuleBase
 @inject ISettingService SettingService
-@inject IStringLocalizer<Settings> Localizer
 
 <div class="container">
     <div class="row mb-1 align-items-center">
-        <Label Class="col-sm-3" For="value" HelpText="Enter a value" ResourceKey="SettingName" ResourceType="@resourceType">Name: </Label>
+        <Label Class="col-sm-3" For="value" HelpText="Enter a value" ResourceKey="SettingName" ResourceType="@resourceType">Lottie URL: </Label>
             <div class="col-sm-9">
                 <input id="value" type="text" class="form-control" @bind="@_value" />
             </div>
@@ -23,7 +22,7 @@
         try
         {
             Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
-            _value = SettingService.GetSetting(settings, "SettingName", "");
+            _value = SettingService.GetSetting(settings, "LottieURL", "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie");
         }
         catch (Exception ex)
         {
@@ -36,7 +35,7 @@
         try
         {
             Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
-            SettingService.SetSetting(settings, "SettingName", _value);
+            SettingService.SetSetting(settings, "LottieURL", _value);
             await SettingService.UpdateModuleSettingsAsync(settings, ModuleState.ModuleId);
         }
         catch (Exception ex)

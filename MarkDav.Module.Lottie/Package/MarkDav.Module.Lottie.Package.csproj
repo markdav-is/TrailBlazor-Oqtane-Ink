@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\MarkDav.Module.Lottie.Client.csproj" />
-    <ProjectReference Include="..\Server\MarkDav.Module.Lottie.Server.csproj" />
-    <ProjectReference Include="..\Shared\MarkDav.Module.Lottie.Shared.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

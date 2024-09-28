@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\MarkDav.Module.Ink.Client.csproj" />
-    <ProjectReference Include="..\Server\MarkDav.Module.Ink.Server.csproj" />
-    <ProjectReference Include="..\Shared\MarkDav.Module.Ink.Shared.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

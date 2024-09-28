@@ -20,6 +20,7 @@ namespace MarkDav.Module.Lottie
             {
                 new Resource { ResourceType = ResourceType.Stylesheet, Url = "~/Module.css" },
                 new Resource { ResourceType = ResourceType.Script, Url = "~/Module.js" },
+
                 //load the lottie-web componwnt library
                 new Resource { ResourceType = ResourceType.Script, 
                     ES6Module=true, Location=ResourceLocation.Body,
