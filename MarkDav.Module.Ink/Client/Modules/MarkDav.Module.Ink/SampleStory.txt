@@ -1,0 +1,46 @@
+// Start of the story
+-> start
+
+== start ==
+You find yourself at a crossroads in a dense forest. The path splits into two directions.
+
+* [Take the left path]
+    -> left_path
+* [Take the right path]
+    -> right_path
+
+== left_path ==
+You walk down the left path and encounter a serene lake. The water is crystal clear, and you can see fish swimming peacefully.
+
+* [Sit by the lake and relax]
+    -> relax_by_lake
+* [Continue walking along the path]
+    -> continue_left
+
+== right_path ==
+You take the right path and find an old, abandoned cabin. The door is slightly ajar, and you can hear faint noises from inside.
+
+* [Enter the cabin]
+    -> enter_cabin
+* [Walk past the cabin]
+    -> walk_past_cabin
+
+== relax_by_lake ==
+You sit by the lake, enjoying the tranquility. The sound of the water and the gentle breeze make you feel at peace.
+
+-> END
+
+== continue_left ==
+You continue walking along the path and discover a hidden waterfall. The sight is breathtaking, and you feel a sense of adventure.
+
+-> END
+
+== enter_cabin ==
+You cautiously enter the cabin and find it filled with old, dusty books and mysterious artifacts. Who knows what secrets it holds?
+
+-> END
+
+== walk_past_cabin ==
+You decide to walk past the cabin and soon find yourself at the edge of the forest, with a beautiful view of the mountains in the distance.
+
+-> END

@@ -1,79 +1,73 @@
 @using MarkDav.Module.Ink.Services
 @using MarkDav.Module.Ink.Models
+@using InkRuntime = global::Ink.Runtime;
+@using global::Ink
+
 
 @namespace MarkDav.Module.Ink
 @inherits ModuleBase
 @inject IInkService InkService
 @inject NavigationManager NavigationManager
-@inject IStringLocalizer<Index> Localizer
+@inject ISettingService SettingService
 
-@if (_Inks == null)
+@if (PageState.EditMode)
+{
+    <h2>@ModuleState.Title</h2>
+}
+else if (_prompt == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <ActionLink Action="Add" Security="SecurityAccessLevel.Edit" Text="Add Ink" ResourceKey="Add" />
-    <br />
-    <br />
-    @if (@_Inks.Count != 0)
-    {
-        <Pager Items="@_Inks">
-            <Header>
-                <th style="width: 1px;">&nbsp;</th>
-                <th style="width: 1px;">&nbsp;</th>
-                <th>@Localizer["Name"]</th>
-            </Header>
-            <Row>
-                <td><ActionLink Action="Edit" Parameters="@($"id=" + context.InkId.ToString())" ResourceKey="Edit"  /></td>
-                <td><ActionDialog Header="Delete Ink" Message="Are You Sure You Wish To Delete This Ink?" Action="Delete" Security="SecurityAccessLevel.Edit" Class="btn btn-danger" OnClick="@(async () => await Delete(context))" ResourceKey="Delete"  Id="@context.InkId.ToString()" /></td>
-                <td>@context.Name</td>
-            </Row>
-        </Pager>
-    }
-    else
-    {
-        <p>@Localizer["Message.DisplayNone"]</p>
-    }
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <p>
+                        @_prompt
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @code {
-    public override string RenderMode => RenderModes.Static;
+ 
+    protected InkRuntime.Story _story = null;
+    private string _prompt;
 
-    public override List<Resource> Resources => new List<Resource>()
-    {
-        new Resource { ResourceType = ResourceType.Stylesheet, Url = ModulePath() + "Module.css" },
-        new Resource { ResourceType = ResourceType.Script, Url = ModulePath() + "Module.js" }
-    };
-
-    List<Ink> _Inks;
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        // Load the Ink story from settings
+        var settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
+        var ink = SettingService.GetSetting(settings, "Ink", "");
+
+    
+        if (!string.IsNullOrEmpty(ink))
         {
-            _Inks = await InkService.GetInksAsync(ModuleState.ModuleId);
-        }
-        catch (Exception ex)
-        {
-            await logger.LogError(ex, "Error Loading Ink {Error}", ex.Message);
-            AddModuleMessage(Localizer["Message.LoadError"], MessageType.Error);
+            // Compile the Ink story
+      
+            var compiler = new Compiler(ink);
+            try{
+                _story = compiler.Compile(); // this can fail if the ink is invalid
+                Continue();
+            }
+            catch (Exception ex)
+            {
+                AddModuleMessage(ex.Message, MessageType.Error);
+            }
+
         }
     }
 
-    private async Task Delete(Ink Ink)
+    private void Continue()
     {
-        try
+        if (_story != null && _story.canContinue)
         {
-            await InkService.DeleteInkAsync(Ink.InkId, ModuleState.ModuleId);
-            await logger.LogInformation("Ink Deleted {Ink}", Ink);
-            _Inks = await InkService.GetInksAsync(ModuleState.ModuleId);
-            StateHasChanged();
-        }
-        catch (Exception ex)
-        {
-            await logger.LogError(ex, "Error Deleting Ink {Ink} {Error}", Ink, ex.Message);
-            AddModuleMessage(Localizer["Message.DeleteError"], MessageType.Error);
+            _prompt = _story.ContinueMaximally();
         }
     }
 }

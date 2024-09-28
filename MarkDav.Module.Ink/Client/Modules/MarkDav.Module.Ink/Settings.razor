@@ -1,14 +1,13 @@
 @namespace MarkDav.Module.Ink
 @inherits ModuleBase
 @inject ISettingService SettingService
-@inject IStringLocalizer<Settings> Localizer
 
 <div class="container">
     <div class="row mb-1 align-items-center">
-        <Label Class="col-sm-3" For="value" HelpText="Enter a value" ResourceKey="SettingName" ResourceType="@resourceType">Name: </Label>
-            <div class="col-sm-9">
-                <input id="value" type="text" class="form-control" @bind="@_value" />
-            </div>
+        <label class="col-sm-3" For="value" ResourceKey="SettingName" ResourceType="@resourceType">Ink: </label>
+        <div class="col-sm-9">
+            <textarea id="value" type="text" class="form-control" @bind="@_ink" rows="10" />
+        </div>
     </div>
 </div>
 
@@ -16,14 +15,14 @@
     private string resourceType = "MarkDav.Module.Ink.Settings, MarkDav.Module.Ink.Client.Oqtane"; // for localization
     public override string Title => "Ink Settings";
 
-    string _value;
+    string _ink;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
-            _value = SettingService.GetSetting(settings, "SettingName", "");
+            _ink = SettingService.GetSetting(settings, "Ink", "");
         }
         catch (Exception ex)
         {
@@ -36,7 +35,7 @@
         try
         {
             Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
-            SettingService.SetSetting(settings, "SettingName", _value);
+            SettingService.SetSetting(settings, "Ink", _ink);
             await SettingService.UpdateModuleSettingsAsync(settings, ModuleState.ModuleId);
         }
         catch (Exception ex)
