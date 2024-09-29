@@ -1,7 +1,9 @@
 @namespace MarkDav.Module.Lottie
+@using System.ComponentModel
 @inherits ModuleBase
 
 @inject ISettingService SettingService
+@implements IDisposable 
 
 @if (PageState.EditMode)
 {
@@ -37,10 +39,29 @@ else
         {
             Dictionary<string, string> settings = await SettingService.GetModuleSettingsAsync(ModuleState.ModuleId);
             _url = SettingService.GetSetting(settings, "LottieURL", "https://lottie.host/4db68bbd-31f6-4cd8-84eb-189de081159a/IGmMCqhzpt.lottie");
+
+            ((INotifyPropertyChanged)SiteState.Properties).PropertyChanged += HandlePropertyChanged;
+
         }
         catch (Exception ex)
         {
             AddModuleMessage(ex.Message, MessageType.Error);
         }
+
     }
+
+    private void HandlePropertyChanged(object sender, PropertyChangedEventArgs args)
+    {
+        if (args.PropertyName=="Lottie")
+        {
+            _url = SiteState.Properties["Lottie"];
+            StateHasChanged();
+        }
+    }
+
+    public void Dispose()
+    {
+        ((INotifyPropertyChanged)SiteState.Properties).PropertyChanged -= HandlePropertyChanged;
+    }
+
 }

@@ -4,13 +4,13 @@
 == start ==
 You find yourself at a crossroads in a dense forest. The path splits into two directions.
 
-* [Take the left path]
+* [Take the left path] 
     -> left_path
 * [Take the right path]
     -> right_path
 
 == left_path ==
-You walk down the left path and encounter a serene lake. The water is crystal clear, and you can see fish swimming peacefully.
+You walk down the left path and encounter a serene lake. The water is crystal clear, and you can see fish swimming peacefully. # lottie:lottie.host/ed47bc6a-f351-4c4f-a657-00dc215f92c4/2lVUfCg7Kk.json
 
 * [Sit by the lake and relax]
     -> relax_by_lake
