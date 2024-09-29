@@ -11,5 +11,6 @@ namespace MarkDav.Module.Lottie
         {
             _jsRuntime = jsRuntime;
         }
+
     }
 }

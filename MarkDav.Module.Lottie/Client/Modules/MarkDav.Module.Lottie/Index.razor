@@ -3,6 +3,7 @@
 @inherits ModuleBase
 
 @inject ISettingService SettingService
+@inject IJSRuntime JSRuntime
 @implements IDisposable 
 
 @if (PageState.EditMode)
@@ -20,15 +21,24 @@ else
             <div class="col-md-6">
                 <div class="text-center">
                     <p>
-                        <dotlottie-wc src="@_url" autoplay loop></dotlottie-wc>
+                        <dotlottie-wc id="lottie" src="@_url" autoplay loop></dotlottie-wc>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 }
- 
 
+<script>
+    const dotLottieComponent = document.querySelector('dotlottie-wc');
+    window.updateLottie(url) {
+        dotLottieComponent.dotLottie.load({
+            loop: true,
+            autoplay: true,
+            src: url
+        });
+    }
+</script>
 
 @code {
 
@@ -54,8 +64,9 @@ else
     {
         if (args.PropertyName=="Lottie")
         {
-            _url = SiteState.Properties["Lottie"];
-            StateHasChanged();
+            var url = SiteState.Properties["Lottie"];  // this won't work, but you get the idea
+            // call the JS function to update the Lottie animation
+            JSRuntime.InvokeVoidAsync("updateLottie", url).GetAwaiter();
         }
     }
 
